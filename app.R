@@ -98,9 +98,7 @@ ui <- fluidPage(
           div(class="color-key-row", div(class="color-dot", style="background:#00FF00;"), tags$span(tags$strong("Green:"), " Low Energy / High Pleasure (Calm)")),
           div(class="color-key-row", div(class="color-dot", style="background:#0000FF;"), tags$span(tags$strong("Blue:"), " Low Energy / Low Pleasure (Sad)")),
           div(class="color-key-row", div(class="color-dot", style="background:#5A5A5A;"), tags$span(tags$strong("Grey:"), " Neutral (Balanced)")),
-          
-          tags$p(style="margin-top:24px; font-size: 0.8em; color: #8e8e93; font-style: italic;", 
-                 "Select a mode that matches your state to provide a 'social weather report' to your network.")
+
       )
     ),
 
