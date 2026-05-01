@@ -25,7 +25,7 @@ ui <- fluidPage(
     tags$style(HTML("
       body { background-color: #ffffff; font-family: -apple-system, sans-serif; }
       
-      /* Perfectly Centered & Small Tabs */
+      /* Perfectly Centered & Small Tabs with Underline Indicator */
       .nav-tabs { 
         border: none; 
         display: flex; 
@@ -40,6 +40,7 @@ ui <- fluidPage(
         flex: 1; 
         text-align: center;
         list-style: none;
+        position: relative; /* Necessary for the underline position */
       }
       .nav-tabs > li > a { 
         border: none !important; 
@@ -50,8 +51,21 @@ ui <- fluidPage(
         text-transform: uppercase;
         letter-spacing: 0.8px;
         display: block;
+        transition: color 0.3s ease;
       }
+      
+      /* The Underline Indicator */
       .nav-tabs > li.active > a { color: #007aff !important; font-weight: 600; }
+      .nav-tabs > li.active > a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 25%; /* Centers the line under the text */
+        width: 50%;
+        height: 2px;
+        background-color: #007aff;
+        border-radius: 2px;
+      }
 
       /* Ring & Photo Styling */
       .main-ring-wrapper { width: 220px; height: 220px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; border: 12px solid #5A5A5A; box-sizing: border-box; }
@@ -70,7 +84,7 @@ ui <- fluidPage(
       .friend-photo { width: 100%; height: 100%; border-radius: 50%; background-size: cover; }
       .friend-name { margin-top: 10px; color: #1c1c1e; font-size: 14px; }
 
-      /* Reverted Info Tab Styling */
+      /* Info Tab Styling */
       .info-container { max-width: 500px; margin: 0 auto; padding: 10px 20px; color: #1c1c1e; line-height: 1.5; }
       .info-header { font-size: 1.3em; font-weight: 400; margin-bottom: 15px; color: #1c1c1e; }
       .color-key { display: flex; align-items: center; margin-bottom: 8px; gap: 10px; font-size: 0.85em; }
