@@ -24,43 +24,57 @@ ui <- fluidPage(
   tags$head(
     tags$style(HTML("
       body { background-color: #ffffff; font-family: -apple-system, sans-serif; }
-      .nav-tabs { border: none; display: flex; justify-content: center; margin: 30px 0; gap: 40px; }
-      .nav-tabs > li > a { border: none !important; background: transparent !important; color: #8e8e93; font-size: 18px; padding: 0; }
+      
+      /* Perfectly Centered & Small Tabs */
+      .nav-tabs { 
+        border: none; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+        margin: 20px auto; 
+        width: 100%;
+        max-width: 500px;
+        padding: 0;
+      }
+      .nav-tabs > li { 
+        flex: 1; 
+        text-align: center;
+        list-style: none;
+      }
+      .nav-tabs > li > a { 
+        border: none !important; 
+        background: transparent !important; 
+        color: #8e8e93; 
+        font-size: 11px; 
+        padding: 10px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        display: block;
+      }
       .nav-tabs > li.active > a { color: #007aff !important; font-weight: 600; }
 
-      /* Master Ring Logic: 12px Color, 6px White */
-      .main-ring-wrapper {
-        width: 220px; height: 220px;
-        border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        margin: 0 auto;
-        border: 12px solid #5A5A5A; 
-        box-sizing: border-box;
-      }
-      .white-spacer {
-        width: 100%; height: 100%;
-        border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        border: 6px solid white; 
-        box-sizing: border-box;
-      }
-      .profile-photo {
-        width: 100%; height: 100%;
-        border-radius: 50%;
-        background-size: cover;
-        background-position: center;
-        background-color: #f0f0f0;
-      }
+      /* Ring & Photo Styling */
+      .main-ring-wrapper { width: 220px; height: 220px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; border: 12px solid #5A5A5A; box-sizing: border-box; }
+      .white-spacer { width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 6px solid white; box-sizing: border-box; }
+      .profile-photo { width: 100%; height: 100%; border-radius: 50%; background-size: cover; background-position: center; background-color: #f0f0f0; }
       
-      .mood-input-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 220px; margin: 40px auto; }
+      /* Input Grid */
+      .mood-input-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 220px; margin: 30px auto; }
       .mood-btn { width: 60px; height: 60px; border: none; border-radius: 50%; cursor: pointer; }
       
+      /* Friends Grid */
       .friends-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 20px; max-width: 360px; margin: 0 auto; }
       .friend-widget { display: flex; flex-direction: column; align-items: center; }
       .friend-ring { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 6px solid #ccc; box-sizing: border-box; }
       .friend-spacer { width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-sizing: border-box; }
       .friend-photo { width: 100%; height: 100%; border-radius: 50%; background-size: cover; }
-      .friend-name { margin-top: 10px; color: #1c1c1e; font-size: 15px; }
+      .friend-name { margin-top: 10px; color: #1c1c1e; font-size: 14px; }
+
+      /* Reverted Info Tab Styling */
+      .info-container { max-width: 500px; margin: 0 auto; padding: 10px 20px; color: #1c1c1e; line-height: 1.5; }
+      .info-header { font-size: 1.3em; font-weight: 400; margin-bottom: 15px; color: #1c1c1e; }
+      .color-key { display: flex; align-items: center; margin-bottom: 8px; gap: 10px; font-size: 0.85em; }
+      .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
     "))
   ),
   
@@ -75,6 +89,7 @@ ui <- fluidPage(
           )
       )
     ),
+    
     tabPanel("Friends Mode",
       div(style = "margin-top: 20px;",
           div(class = "friends-grid",
@@ -89,6 +104,27 @@ ui <- fluidPage(
                 )
               })
           )
+      )
+    ),
+
+    tabPanel("What Are Modes",
+      div(class = "info-container",
+          div(class = "info-header", "Understanding Your Mode"),
+          tags$p(style="font-size: 0.9em;", "Based on the ", tags$strong("Circumplex Model of Affect"), "."),
+          
+          tags$ul(style="font-size: 0.85em;",
+            tags$li(tags$strong("Valence:"), " Pleasure (Left to Right)"),
+            tags$li(tags$strong("Arousal:"), " Energy (Top to Bottom)")
+          ),
+          tags$hr(style="margin: 15px 0;"),
+          tags$h5("The Color Guide", style="margin-bottom: 10px; font-weight:600; font-size:0.9em;"),
+          div(class="color-key", div(class="dot", style="background:#FF0000;"), tags$span("Red: High Energy / Challenging")),
+          div(class="color-key", div(class="dot", style="background:#FFFF00;"), tags$span("Yellow: High Energy / Pleasant")),
+          div(class="color-key", div(class="dot", style="background:#00FF00;"), tags$span("Green: Low Energy / Pleasant")),
+          div(class="color-key", div(class="dot", style="background:#0000FF;"), tags$span("Blue: Low Energy / Challenging")),
+          div(class="color-key", div(class="dot", style="background:#5A5A5A;"), tags$span("Grey: Neutral / Balanced")),
+          tags$p(style="margin-top:15px; font-style:italic; color:#888; font-size: 0.8em;", 
+                 "Select a mode that matches your current state.")
       )
     )
   )
