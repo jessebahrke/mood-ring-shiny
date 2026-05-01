@@ -1,0 +1,10 @@
+name: mode-ring-shiny
+title:
+username: jessebahrke
+account: jessebahrke
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17273967
+bundleId: 11934374
+url: https://jessebahrke.shinyapps.io/mode-ring-shiny/
+version: 1
