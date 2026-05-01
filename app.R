@@ -23,48 +23,23 @@ friends <- data.frame(
 ui <- fluidPage(
   tags$head(
     tags$style(HTML("
-      body { background-color: #ffffff; font-family: -apple-system, sans-serif; }
+      body { background-color: #ffffff; font-family: -apple-system, sans-serif; overflow-x: hidden; }
       
-      /* Perfectly Centered & Small Tabs with Underline Indicator */
+      /* Centered Tabs with Underline */
       .nav-tabs { 
-        border: none; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center;
-        margin: 20px auto; 
-        width: 100%;
-        max-width: 500px;
-        padding: 0;
+        border: none; display: flex; justify-content: center; align-items: center;
+        margin: 20px auto; width: 100%; max-width: 500px; padding: 0;
       }
-      .nav-tabs > li { 
-        flex: 1; 
-        text-align: center;
-        list-style: none;
-        position: relative; /* Necessary for the underline position */
-      }
+      .nav-tabs > li { flex: 1; text-align: center; list-style: none; position: relative; }
       .nav-tabs > li > a { 
-        border: none !important; 
-        background: transparent !important; 
-        color: #8e8e93; 
-        font-size: 11px; 
-        padding: 10px 0;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        display: block;
-        transition: color 0.3s ease;
+        border: none !important; background: transparent !important; 
+        color: #8e8e93; font-size: 11px; padding: 10px 0;
+        text-transform: uppercase; letter-spacing: 0.8px; display: block;
       }
-      
-      /* The Underline Indicator */
       .nav-tabs > li.active > a { color: #007aff !important; font-weight: 600; }
       .nav-tabs > li.active > a::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 25%; /* Centers the line under the text */
-        width: 50%;
-        height: 2px;
-        background-color: #007aff;
-        border-radius: 2px;
+        content: ''; position: absolute; bottom: 0; left: 25%; width: 50%;
+        height: 2px; background-color: #007aff; border-radius: 2px;
       }
 
       /* Ring & Photo Styling */
@@ -72,20 +47,27 @@ ui <- fluidPage(
       .white-spacer { width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 6px solid white; box-sizing: border-box; }
       .profile-photo { width: 100%; height: 100%; border-radius: 50%; background-size: cover; background-position: center; background-color: #f0f0f0; }
       
-      /* Input Grid */
+      /* Input Grid Spacing */
       .mood-input-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 220px; margin: 30px auto; }
       .mood-btn { width: 60px; height: 60px; border: none; border-radius: 50%; cursor: pointer; }
       
-      /* Friends Grid */
-      .friends-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 20px; max-width: 360px; margin: 0 auto; }
+      /* Friends Grid - Tightened and Bumped Down */
+      .friends-view-container { margin-top: 50px; } /* This bumps the whole grid down */
+      .friends-grid { 
+        display: grid; 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 25px 10px; 
+        max-width: 280px; 
+        margin: 0 auto; 
+      }
       .friend-widget { display: flex; flex-direction: column; align-items: center; }
-      .friend-ring { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 6px solid #ccc; box-sizing: border-box; }
+      .friend-ring { width: 110px; height: 110px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 6px solid #ccc; box-sizing: border-box; }
       .friend-spacer { width: 100%; height: 100%; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-sizing: border-box; }
       .friend-photo { width: 100%; height: 100%; border-radius: 50%; background-size: cover; }
-      .friend-name { margin-top: 10px; color: #1c1c1e; font-size: 14px; }
+      .friend-name { margin-top: 8px; color: #1c1c1e; font-size: 13px; font-weight: 400; }
 
       /* Info Tab Styling */
-      .info-container { max-width: 500px; margin: 0 auto; padding: 10px 20px; color: #1c1c1e; line-height: 1.5; }
+      .info-container { max-width: 500px; margin: 30px auto 0; padding: 10px 20px; color: #1c1c1e; line-height: 1.5; }
       .info-header { font-size: 1.3em; font-weight: 400; margin-bottom: 15px; color: #1c1c1e; }
       .color-key { display: flex; align-items: center; margin-bottom: 8px; gap: 10px; font-size: 0.85em; }
       .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
@@ -94,7 +76,7 @@ ui <- fluidPage(
   
   tabsetPanel(
     tabPanel("My Mode",
-      div(style = "margin-top: 20px;",
+      div(style = "margin-top: 40px;",
           uiOutput("my_ring_ui"),
           div(class = "mood-input-grid",
               lapply(1:9, function(i) {
@@ -105,7 +87,7 @@ ui <- fluidPage(
     ),
     
     tabPanel("Friends Mode",
-      div(style = "margin-top: 20px;",
+      div(class = "friends-view-container",
           div(class = "friends-grid",
               lapply(1:nrow(friends), function(i) {
                 div(class = "friend-widget",
@@ -125,7 +107,6 @@ ui <- fluidPage(
       div(class = "info-container",
           div(class = "info-header", "Understanding Your Mode"),
           tags$p(style="font-size: 0.9em;", "Based on the ", tags$strong("Circumplex Model of Affect"), "."),
-          
           tags$ul(style="font-size: 0.85em;",
             tags$li(tags$strong("Valence:"), " Pleasure (Left to Right)"),
             tags$li(tags$strong("Arousal:"), " Energy (Top to Bottom)")
