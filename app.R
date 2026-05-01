@@ -1,15 +1,15 @@
-#library(rsconnect)
-#rsconnect::setAccountInfo(name='jessebahrke', token='CB450D8264DE8036815912D114B18B5A', secret='oi4EzZnOjWFU8jHbuUqzHntE3EgKLoZStabWeTLF')
-#rsconnect::deployApp('/Users/jessebahrke/Documents/mode-ring-shiny/')
-#shiny::runApp("/Users/jessebahrke/Documents/mode-ring-shiny/")
+# library(rsconnect)
+# rsconnect::setAccountInfo(name='jessebahrke', token='CB450D8264DE8036815912D114B18B5A', secret='oi4EzZnOjWFU8jHbuUqzHntE3EgKLoZStabWeTLF')
+# rsconnect::deployApp('/Users/jessebahrke/Documents/mode-ring-shiny/')
+# shiny::runApp("/Users/jessebahrke/Documents/mode-ring-shiny/")
 
 library(shiny)
 
 # 1. Setup Colors
 grid_colors <- c(
-  "#FF0000", "#FF8000", "#FFFF00", 
-  "#800080", "#5A5A5A", "#80FF00", 
-  "#0000FF", "#008080", "#00FF00" 
+  "#FF0000", "#FF8000", "#FFFF00",
+  "#800080", "#5A5A5A", "#80FF00",
+  "#0000FF", "#008080", "#00FF00"
 )
 
 # 2. Setup Mock Data
@@ -52,7 +52,7 @@ ui <- fluidPage(
       .color-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
     "))
   ),
-  
+
   div(class = "settings-footer", actionLink("go_settings", "Settings", class = "settings-link")),
 
   tabsetPanel(id = "main_tabs",
@@ -65,7 +65,7 @@ ui <- fluidPage(
           )
       )
     ),
-    
+
     tabPanel("Friends",
       div(class = "friends-view-container", style="margin-top: 50px;",
           div(style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px 10px; max-width: 280px; margin: 0 auto;",
