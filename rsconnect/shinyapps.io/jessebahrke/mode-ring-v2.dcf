@@ -5,6 +5,6 @@ account: jessebahrke
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 17276280
-bundleId: 11936319
+bundleId: 11936351
 url: https://jessebahrke.shinyapps.io/mode-ring-v2/
 version: 1

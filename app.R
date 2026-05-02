@@ -80,6 +80,9 @@ ui <- fluidPage(
       .info-container { max-width: 480px; margin: 30px auto 0; padding: 0 25px; color: #1c1c1e; line-height: 1.6; }
       .info-subhead { font-size: 0.95em; font-weight: 600; margin-top: 24px; margin-bottom: 8px; color: #3a3a3c; }
       .color-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+      
+      .contact-buffer { margin-top: 40px; padding-bottom: 20px; text-align: center; }
+      .contact-email { font-size: 0.75em; font-style: italic; color: #8e8e93; text-decoration: none; }
     ")))
   ),
   uiOutput("display_ui")
@@ -91,7 +94,6 @@ server <- function(input, output, session) {
 
   observeEvent(input$login_btn, { is_logged_in(TRUE) })
   
-  # Corrected loop using seq_along for the button grid
   observe({ 
     lapply(seq_along(grid_colors), function(i) { 
       observeEvent(input[[paste0("btn_", i)]], { selected_color(grid_colors[i]) }) 
@@ -175,6 +177,13 @@ server <- function(input, output, session) {
                     div(style="display:flex; align-items:flex-start; gap:12px; font-size:0.85em;", 
                         div(class="color-dot", style="background:#5A5A5A; margin-top:4px;"), 
                         div(tags$strong("Grey: Neutral / Balanced"), tags$br(), "A steady baseline state; neither high energy nor strong emotion."))
+                ),
+                
+                # --- CONTACT BUFFER SECTION ---
+                div(class = "contact-buffer",
+                    tags$a(href = "mailto:Jesse.bahrke@my.rosalindfranklin.edu", 
+                           class = "contact-email", 
+                           "Jesse.bahrke@my.rosalindfranklin.edu")
                 )
             )
           ),
