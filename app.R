@@ -1,4 +1,4 @@
-# library(rsconnect)
+# library(rsconnect) # nolint
 # rsconnect::setAccountInfo(name='jessebahrke', token='CB450D8264DE8036815912D114B18B5A', secret='oi4EzZnOjWFU8jHbuUqzHntE3EgKLoZStabWeTLF')
 # rsconnect::deployApp('/Users/jessebahrke/Documents/mode-ring-shiny/')
 # shiny::runApp("/Users/jessebahrke/Documents/mode-ring-shiny/")
@@ -7,15 +7,15 @@ library(shiny)
 
 # 1. Setup Colors (The 8 colors in requested order for the logo ring)
 logo_colors <- c(
-  "#FF0000", "#FF8000", "#FFFF00", "#80FF00", 
+  "#FF0000", "#FF8000", "#FFFF00", "#80FF00",
   "#00FF00", "#008080", "#0000FF", "#800080"
 )
 
 # Colors for the 9-button grid inside the app
 grid_colors <- c(
-  "#FF0000", "#FF8000", "#FFFF00", 
-  "#800080", "#5A5A5A", "#80FF00", 
-  "#0000FF", "#008080", "#00FF00" 
+  "#FF0000", "#FF8000", "#FFFF00",
+  "#800080", "#5A5A5A", "#80FF00",
+  "#0000FF", "#008080", "#00FF00"
 )
 
 # Setup Mock Data
@@ -90,7 +90,14 @@ server <- function(input, output, session) {
   selected_color <- reactiveVal("#5A5A5A")
 
   observeEvent(input$login_btn, { is_logged_in(TRUE) })
-  observe({ lapply(1:9, function(i) { observeEvent(input[[paste0("btn_", i)]], { selected_color(grid_colors[i]) }) }) })
+  
+  # Corrected loop using seq_along for the button grid
+  observe({ 
+    lapply(seq_along(grid_colors), function(i) { 
+      observeEvent(input[[paste0("btn_", i)]], { selected_color(grid_colors[i]) }) 
+    }) 
+  })
+  
   observeEvent(input$go_settings, { updateTabsetPanel(session, "main_tabs", selected = "Settings") })
 
   output$display_ui <- renderUI({
@@ -114,7 +121,7 @@ server <- function(input, output, session) {
           tabPanel("Mode",
             div(uiOutput("my_ring_ui"),
                 div(class = "mood-input-grid",
-                    lapply(1:9, function(i) {
+                    lapply(seq_along(grid_colors), function(i) {
                       actionButton(paste0("btn_", i), "", class = "mood-btn", style = paste0("background-color:", grid_colors[i], ";"))
                     })
                 )
@@ -122,7 +129,7 @@ server <- function(input, output, session) {
           ),
           tabPanel("Friends",
             div(class = "friends-grid",
-                lapply(1:nrow(friends), function(i) {
+                lapply(seq_len(nrow(friends)), function(i) {
                   div(style="display: flex; flex-direction: column; align-items: center;",
                       div(style=paste0("width:110px; height:110px; border-radius:50%; border:6px solid ", friends$color[i], "; display:flex; align-items:center; justify-content:center; box-sizing:border-box;"),
                           div(style="width:100%; height:100%; border:3px solid white; border-radius:50%; display:flex; align-items:center; justify-content:center; box-sizing:border-box;",
@@ -141,14 +148,14 @@ server <- function(input, output, session) {
                        "Mode Ring uses the Circumplex Model of Affect to help you communicate your internal state at a glance."),
                 
                 div(class = "info-subhead", "The Core Dimensions"),
-                tags$p(style="font-size: 0.85em;", tags$strong("Valence:"), " The horizontal axis. This measures the 'pleasure' of an emotion, ranging from unpleasant (displeasure) to pleasant."),
-                tags$p(style="font-size: 0.85em;", tags$strong("Arousal:"), " The vertical axis. This measures the 'activation' or physical energy level, ranging from low (stillness) to high (alertness)."),
+                tags$p(style="font-size: 0.85em;", tags$strong("Valence:"), " The horizontal axis. This measures pleasure vs. displeasure."),
+                tags$p(style="font-size: 0.85em;", tags$strong("Arousal:"), " The vertical axis. This measures physical energy or alertness."),
 
                 div(class = "info-subhead", "How to Select Your Mode"),
                 tags$p(style="font-size: 0.85em; color: #3a3a3c;", "Perform a quick 'Internal Scan' by asking two questions:"),
                 tags$ol(style="font-size: 0.85em; padding-left: 20px;",
-                  tags$li(tags$strong("Body (Energy):"), " Is my heart racing or am I feeling heavy/tired? (Up vs. Down)"),
-                  tags$li(tags$strong("Mind (Pleasure):"), " Is this a feeling I'd generally like to continue or escape? (Right vs. Left)")
+                  tags$li(tags$strong("Body (Energy):"), " Is my heart racing or am I feeling heavy/tired?"),
+                  tags$li(tags$strong("Mind (Pleasure):"), " Is this a feeling I'd generally like to continue or escape?")
                 ),
 
                 div(class = "info-subhead", "The Quadrants"),
