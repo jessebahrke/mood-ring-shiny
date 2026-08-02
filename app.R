@@ -15,7 +15,7 @@ logo_colors <- c(
 grid_colors <- c(
   "#FF0000", "#FF8000", "#FFFF00",
   "#800080", "#5A5A5A", "#80FF00",
-  "#0000FF", "#008080", "#00FF00"
+  "#0000FF", "#008080", "#00FF00" 
 )
 
 # Setup Mock Data
